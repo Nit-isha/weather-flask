@@ -58,8 +58,10 @@ def delete(id):
     except:
         return 'There was problem deleting that task.'
 
+@app.route('/test')
+def test():
+    return dict(os.environ)
 
 if __name__ == "__main__":
     app.config['APIid'] = os.environ.get('APIid')
-    #dotenvi
     app.run(debug=True)
