@@ -1,0 +1,89 @@
+body {
+  background-color: rgb(26, 112, 112);
+  margin: 0;
+}
+
+h1 {
+  color: white;
+  font-family: "Dancing Script", cursive;
+}
+
+.content {
+  margin: 0 auto;
+  width: 500px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#city {
+  text-transform: capitalize;
+  font-family: "Kaushan Script", cursive;
+  padding: 5px;
+  width: 230px;
+  border-radius: 4px;
+  box-shadow: 2px;
+  margin-bottom: 1-px;
+}
+
+.submit {
+  padding: 6px;
+  border-radius: 8px;
+  background-color: rgb(190, 160, 27);
+  margin-bottom: 10px;
+}
+
+.submit:hover {
+  background-color: rgb(223, 197, 84);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.container {
+  background-color: aliceblue;
+  border-style: inset;
+  margin-top: 20px;
+  margin-right: 10px;
+  width: 270px;
+  padding: 5px;
+  border-radius: 10px;
+  height: auto;
+}
+
+.photo {
+  float: left;
+  width: 60px;
+  padding-right: 15px;
+}
+
+.text {
+  display: inline;
+}
+
+.title {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+#Delete {
+  float: right;
+  padding-right: 1px;
+  text-decoration: none;
+}
+
+#Delete:hover {
+  padding-right: 0px;
+  border: 1px solid grey;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: auto;
+  }
+}
