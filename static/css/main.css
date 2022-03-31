@@ -70,6 +70,10 @@ h1 {
   text-transform: capitalize;
 }
 
+.desc {
+  text-transform: capitalize;
+}
+
 #Delete {
   float: right;
   padding-right: 1px;
