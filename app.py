@@ -34,7 +34,7 @@ def index():
         
         weather_data = []
         for city in cities:
-            response = requests.get(url.format(city.cityName, app.config['APIid'])).json()
+            response = requests.get(url.format(city.cityName, os.environ.get('APIid'))).json()
             
             weather = {
                 'id' : city.id,
