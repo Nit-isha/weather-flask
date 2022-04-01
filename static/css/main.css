@@ -1,3 +1,4 @@
+
 body {
   background-color: rgb(26, 112, 112);
   margin: 0;
@@ -85,9 +86,74 @@ h1 {
   border: 1px solid grey;
 }
 
+.notification {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  animation-name: fade-out;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-delay: 2s;
+  animation-timing-function: linear;
+  padding: 16px 24px;
+  border-radius: 8px;
+}
+
+.success {
+  background-color: rgb(135, 234, 135);
+  color: black;
+  border: 1px solid rgb(2, 73, 2);
+}
+
+.error {
+  background-color: rgb(255, 123, 123);
+  color: black;
+  border: 1px solid rgb(149, 14, 14);
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
+  /* body{
+    max-width: fit-content;
+  } */
+  .content {
+    max-width: fit-content;
+    width: auto;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  .notification {
+    position: absolute;
+    top: 50px;
+    right: 4px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body{
+    max-width: device-width; 
+    
+  }
   .grid {
     display: grid;
     grid-template-columns: auto;
+  }
+  .notification {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    padding: 8px 12px;
   }
 }

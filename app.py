@@ -23,14 +23,12 @@ def get_weather_data(city):
     return response
         
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index_get():
     cities = City.query.all()
     weather_data = []
-
     for city in cities:
         response = get_weather_data(city.cityName)
-        print(response)
 
         weather = {
             'id' : city.id,
@@ -47,9 +45,9 @@ def index_get():
 
 @app.route('/', methods=['POST'])
 def index_post():
-    err_msg = ''
+    msg = ''
+    status = 1
     new_city = request.form.get('city')
-
     if new_city:
         existing_city = City.query.filter_by(cityName=new_city.lower()).first()
         
@@ -59,14 +57,40 @@ def index_post():
                 new_city_obj = City(cityName=new_city)
                 db.session.add(new_city_obj)
                 db.session.commit()
+                msg = 'City added Successfully!'
+
             else:
-                err_msg = 'City does not exist in the world.'
+                msg = 'City does not exist in the world.'
+                status = 0
 
         else:
-            err_msg = 'City already exists in the database. '
-
-    return redirect(url_for('index_get'))
+            msg = 'City already exists in the database. '
+            status = 0
     
+
+    cities = City.query.all()
+    weather_data = []
+
+    for city in cities:
+        response = get_weather_data(city.cityName)
+
+        weather = {
+            'id' : city.id,
+            'city' : city.cityName,
+            'temprature' : response['main']['temp'],
+            'desc' : response['weather'][0]['description'],
+            'icon' : response['weather'][0]['icon']
+        }
+        
+        weather_data.append(weather)
+
+    return render_template('index.html', msg=msg, status=status, weather_data=weather_data)
+
+
+def errormessage(err_msg):
+    print(err_msg)
+    return render_template('index.html', err_msg=err_msg)
+
         
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -77,10 +101,6 @@ def delete(id):
         return redirect('/')
     except:
         return 'There was problem deleting that task.'
-
-@app.route('/test')
-def test():
-    return dict(os.environ)
 
 if __name__ == "__main__":
     app.config['APIid'] = os.environ.get('APIid')

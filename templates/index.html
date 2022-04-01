@@ -9,7 +9,16 @@
     <form action="/" method="POST">
         <input type="text" name="city" id="city" placeholder="city name" autofocus="autofocus">
         <input type="submit" value="Add city" class="submit">
+        {% if msg %}
+            {% if status == 1 %}
+                <p class="success notification">{{ msg }}</p>
+            {% else %}
+                <p class="error notification">{{ msg }}</p>
+            {% endif %}
+        {% endif %}
+
     </form>
+
     <div class="grid">
         {% for weather in weather_data %}
         <div class="container">
