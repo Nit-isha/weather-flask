@@ -16,7 +16,9 @@
                 <p class="error notification">{{ msg }}</p>
             {% endif %}
         {% endif %}
-
+        {% if delete_msg %}
+            <p class="success notification">{{ delete_msg }}</p>
+        {% endif %}
     </form>
 
     <div class="grid">

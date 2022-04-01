@@ -21,10 +21,8 @@ def get_weather_data(city):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
     response = requests.get(url.format(city, os.environ.get('APIid'))).json()
     return response
-        
 
-@app.route('/', methods=['GET'])
-def index_get():
+def get_method():
     cities = City.query.all()
     weather_data = []
     for city in cities:
@@ -37,8 +35,12 @@ def index_get():
             'desc' : response['weather'][0]['description'],
             'icon' : response['weather'][0]['icon']
         }
-        
         weather_data.append(weather)
+    return weather_data
+
+@app.route('/', methods=['GET'])
+def index_get():
+    weather_data = get_method()
 
     return render_template('index.html', weather_data=weather_data)
 
@@ -67,38 +69,23 @@ def index_post():
             msg = 'City already exists in the database. '
             status = 0
     
-
-    cities = City.query.all()
-    weather_data = []
-
-    for city in cities:
-        response = get_weather_data(city.cityName)
-
-        weather = {
-            'id' : city.id,
-            'city' : city.cityName,
-            'temprature' : response['main']['temp'],
-            'desc' : response['weather'][0]['description'],
-            'icon' : response['weather'][0]['icon']
-        }
-        
-        weather_data.append(weather)
+    weather_data = get_method()
 
     return render_template('index.html', msg=msg, status=status, weather_data=weather_data)
-
-
-def errormessage(err_msg):
-    print(err_msg)
-    return render_template('index.html', err_msg=err_msg)
 
         
 @app.route('/delete/<int:id>')
 def delete(id):
+    delete_msg = ''
     city_to_delete = City.query.get_or_404(id)
     try:
         db.session.delete(city_to_delete)
         db.session.commit()
-        return redirect('/')
+        delete_msg = 'City deleted successfully!'
+        weather_data = get_method()
+
+        return render_template('index.html', weather_data=weather_data, delete_msg=delete_msg)
+
     except:
         return 'There was problem deleting that task.'
 
